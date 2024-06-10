@@ -57,9 +57,7 @@ public class HelloApplication extends Application {
             pages = "connection.fxml";
         }
 
-        sout
-
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("connection.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(pages)));
         Scene scene = new Scene(root);
 
         stage.initStyle(StageStyle.TRANSPARENT);

@@ -416,7 +416,7 @@
                                  <top>
                                     <HBox BorderPane.alignment="CENTER">
                                        <children>
-                                          <Button fx:id="addCat1Buttom" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" stylesheets="@css/styles.css" text="Ajouter une catégorie">
+                                          <Button fx:id="addCat1Buttom" mnemonicParsing="false" onAction="#addCat" prefHeight="50.0" prefWidth="200.0" stylesheets="@css/styles.css" text="Ajouter une catégorie">
                                              <styleClass>
                                                 <String fx:value="center-button-left" />
                                                 <String fx:value="add-button" />
@@ -448,7 +448,7 @@
                                  <top>
                                     <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                                        <children>
-                                          <Button fx:id="addProduit1Button" mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" style="-fx-background-radius: 50;" styleClass="add-button" stylesheets="@css/styles.css" text="Ajouter un produit" />
+                                          <Button fx:id="addProduit1Button" mnemonicParsing="false" onAction="#addProd" prefHeight="50.0" prefWidth="400.0" style="-fx-background-radius: 50;" styleClass="add-button" stylesheets="@css/styles.css" text="Ajouter un produit" />
                                        </children>
                                     </HBox>
                                  </top>

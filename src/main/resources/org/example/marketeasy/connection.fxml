@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.marketeasy.controllers.ConnectionController">
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #a8dcff;">
             <children>
@@ -18,9 +18,9 @@
                           <Font name="Arial Bold" size="25.0" />
                       </font>
                   </Label>
-                  <TextField fx:id="username" layoutX="178.0" layoutY="184.0" prefHeight="35.0" prefWidth="308.0" promptText="nom d'utilisateur" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
-                  <PasswordField fx:id="password" layoutX="178.0" layoutY="233.0" prefHeight="35.0" prefWidth="308.0" promptText="mot de passe" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
-                  <Button fx:id="loginButton" layoutX="207.0" layoutY="324.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" styleClass="create-button" stylesheets="@css/smaleCss.css" text="Connexion">
+                  <TextField fx:id="username" layoutX="178.0" layoutY="184.0" onKeyPressed="#AdminLoginkey" prefHeight="35.0" prefWidth="308.0" promptText="nom d'utilisateur" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
+                  <PasswordField fx:id="password" layoutX="178.0" layoutY="233.0" onKeyPressed="#AdminLoginkey" prefHeight="35.0" prefWidth="308.0" promptText="mot de passe" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
+                  <Button fx:id="loginButton" layoutX="207.0" layoutY="324.0" mnemonicParsing="false" onAction="#connection" onKeyPressed="#AdminLoginkey" prefHeight="35.0" prefWidth="250.0" styleClass="create-button" stylesheets="@css/smaleCss.css" text="Connexion">
                       <font>
                           <Font name="System Bold" size="15.0" />
                       </font>

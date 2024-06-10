@@ -26,27 +26,27 @@
                   <VBox>
                      <children>
                         <Label text="Nom de la catégorie *" />
-                        <TextField prefHeight="35.0" prefWidth="400.0" styleClass="text-zone2" stylesheets="@css/smaleCss.css" />
+                        <TextField fx:id="categoryName" prefHeight="35.0" prefWidth="400.0" styleClass="text-zone2" stylesheets="@css/smaleCss.css" />
                      </children>
                   </VBox>
                   <VBox>
                      <children>
                         <Label text="Description" />
-                        <TextArea prefHeight="216.0" prefWidth="400.0" styleClass="text-zone2" wrapText="true" />
+                        <TextArea fx:id="categoryDescription" prefHeight="216.0" prefWidth="400.0" styleClass="text-zone2" wrapText="true" />
                      </children>
                   </VBox>
                   <VBox layoutX="10.0" layoutY="10.0">
                      <children>
                         <Label text="Date *" />
-                        <DatePicker prefHeight="32.0" prefWidth="400.0" styleClass="text-zone2" stylesheets="@css/smaleCss.css" />
+                        <DatePicker fx:id="categoryDate" prefHeight="32.0" prefWidth="400.0" styleClass="text-zone2" stylesheets="@css/smaleCss.css" />
                      </children>
                   </VBox>
                </children>
             </VBox>
             <HBox layoutX="125.0" layoutY="483.0">
                <children>
-                  <Button fx:id="addCategorieButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 20;" styleClass="add-button" stylesheets="@css/smaleCss.css" text="Ajouter" />
-                  <Button fx:id="annulerCategorieButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 20;" styleClass="delete2-button" stylesheets="@css/smaleCss.css" text="Annuler" />
+                  <Button fx:id="addCategorieButton" mnemonicParsing="false" onAction="#addCategory" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 20;" styleClass="add-button" stylesheets="@css/smaleCss.css" text="Ajouter" />
+                  <Button fx:id="annulerCategorieButton" mnemonicParsing="false" onAction="#close" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 20;" styleClass="delete2-button" stylesheets="@css/smaleCss.css" text="Annuler" />
                </children>
             </HBox>
          </children>

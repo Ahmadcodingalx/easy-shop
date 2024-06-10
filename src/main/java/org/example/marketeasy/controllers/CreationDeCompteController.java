@@ -113,7 +113,7 @@ public class CreationDeCompteController {
                 alert.showAndWait();
 
 //                pour cacher l'écran
-                signinButton.getScene().getWindow().hide();
+//                signinButton.getScene().getWindow().hide();
 
 //                pour fermer l'écran
                 Stage stg = (Stage) signinButton.getScene().getWindow();

@@ -25,34 +25,34 @@
                <children>
                   <VBox>
                      <children>
-                        <Label text="Nom du produit *" />
-                        <TextField prefHeight="35.0" prefWidth="400.0" promptText="nom du produit" styleClass="text-zone2" stylesheets="@css/smaleCss.css" />
+                        <Label text="Nom du produit " />
+                        <TextField fx:id="productName" prefHeight="35.0" prefWidth="400.0" promptText="nom du produit" styleClass="text-zone2" stylesheets="@css/smaleCss.css" />
                      </children>
                   </VBox>
                   <VBox>
                      <children>
-                        <Label text="Prix *" />
-                        <TextArea prefHeight="35.0" prefWidth="400.0" promptText="0.0fcfa" styleClass="text-zone2" stylesheets="@css/smaleCss.css" wrapText="true" />
+                        <Label text="Prix " />
+                        <TextArea fx:id="productPrice" prefHeight="35.0" prefWidth="400.0" promptText="0.0fcfa" styleClass="text-zone2" stylesheets="@css/smaleCss.css" wrapText="true" />
                      </children>
                   </VBox>
                   <VBox layoutX="10.0" layoutY="82.0">
                      <children>
-                        <Label text="Seuil d'alerte *" />
-                        <TextArea prefHeight="35.0" prefWidth="400.0" styleClass="text-zone2" stylesheets="@css/smaleCss.css" wrapText="true" />
+                        <Label text="Seuil d'alerte " />
+                        <TextArea fx:id="productAlert" prefHeight="35.0" prefWidth="400.0" styleClass="text-zone2" stylesheets="@css/smaleCss.css" wrapText="true" />
                      </children>
                   </VBox>
                   <VBox layoutX="10.0" layoutY="156.0">
                      <children>
-                        <Label text="Date *" />
-                        <DatePicker prefHeight="32.0" prefWidth="400.0" styleClass="text-zone2" stylesheets="@css/smaleCss.css" />
+                        <Label text="Date " />
+                        <DatePicker fx:id="productDate" prefHeight="32.0" prefWidth="400.0" styleClass="text-zone2" stylesheets="@css/smaleCss.css" />
                      </children>
                   </VBox>
                </children>
             </VBox>
             <HBox layoutX="125.0" layoutY="377.0">
                <children>
-                  <Button fx:id="addPrpduitButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 20;" styleClass="add-button" stylesheets="@css/smaleCss.css" text="Ajouter" />
-                  <Button fx:id="annulerProduitButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 20;" styleClass="delete2-button" stylesheets="@css/smaleCss.css" text="Annuler" />
+                  <Button fx:id="addPrpduitButton" mnemonicParsing="false" onAction="#addProducts" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 20;" styleClass="add-button" stylesheets="@css/smaleCss.css" text="Ajouter" />
+                  <Button fx:id="annulerProduitButton" mnemonicParsing="false" onAction="#close" prefHeight="45.0" prefWidth="200.0" style="-fx-background-radius: 20;" styleClass="delete2-button" stylesheets="@css/smaleCss.css" text="Annuler" />
                </children>
             </HBox>
          </children>

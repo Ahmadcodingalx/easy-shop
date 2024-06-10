@@ -4,19 +4,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.example.marketeasy.HelloApplication;
 import org.example.marketeasy.IDBConfig.Database;
+import org.example.marketeasy.models.CategoryData;
+import org.example.marketeasy.models.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -48,28 +56,28 @@ public class DashboardController implements Initializable {
     private Label categorieName;
 
     @FXML
-    private TableView<?> categorieTableView;
+    private Button close_button;
 
     @FXML
-    private Button close_button;
+    private TableView<CategoryData> categorieTableView;
 
     @FXML
     private TableColumn<?, ?> colAllDates;
 
     @FXML
-    private TableColumn<?, ?> colCatDates;
+    private TableColumn<CategoryData, String> colCatDates;
 
     @FXML
-    private TableColumn<?, ?> colCatDescriptions;
+    private TableColumn<CategoryData, String> colCatDescriptions;
 
     @FXML
-    private TableColumn<?, ?> colCatNoms;
+    private TableColumn<CategoryData, String> colCatNoms;
 
     @FXML
-    private TableColumn<?, ?> colCatProduitRouges;
+    private TableColumn<CategoryData, String> colCatProduitRouges;
 
     @FXML
-    private TableColumn<?, ?> colCatTotalProduits;
+    private TableColumn<CategoryData, String> colCatTotalProduits;
 
     @FXML
     private TableColumn<?, ?> colDayNom;
@@ -243,10 +251,33 @@ public class DashboardController implements Initializable {
         }
     }
 
+    ConnectionController connectionController = new ConnectionController();
+
+    public Label getScreenUsername(String screenUserName) {
+        return screenUsername;
+    }
+
+    public void setScreenUsername(Label screenUsername) {
+        this.screenUsername = screenUsername;
+    }
+
+        User user = new User();
+
+    public void displayUsername() {
+//        String userName = user.getUsername();
+//        userName = userName.substring(0, 1).toUpperCase() + userName.substring(1);
+//        screenUsername.setText(userName);
+//        System.out.println(userName);
+    }
+
     @Override
 //    Oppération à éffectuer dès le lancement de l'appli
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        addHistoryShowData();
+        displayUsername();
+        screenName.setText("ACCEUIL");
+        acceuilButton.setStyle("-fx-background-color : #f84df8;");
+//        screenUsername.setText(user.getUsername());
     }
 
     //    Pour basculer entre les écrans
@@ -266,7 +297,7 @@ public class DashboardController implements Initializable {
             calculatriceButton.setStyle("-fx-background-color : transparent;");
             aidesButton.setStyle("-fx-background-color : transparent;");
 
-//            screenName.setText("ACCEUIL");
+            screenName.setText("ACCEUIL");
 
         } else if (event.getSource() == produitsButton) {
 
@@ -282,7 +313,7 @@ public class DashboardController implements Initializable {
             calculatriceButton.setStyle("-fx-background-color : transparent;");
             aidesButton.setStyle("-fx-background-color : transparent;");
 
-//            screenName.setText("PRODUITS");
+            screenName.setText("PRODUITS");
 
         } else if (event.getSource() == statistiquesButton) {
 
@@ -298,7 +329,7 @@ public class DashboardController implements Initializable {
             calculatriceButton.setStyle("-fx-background-color : transparent;");
             aidesButton.setStyle("-fx-background-color : transparent;");
 
-//            screenName.setText("STATISTIQUES");
+            screenName.setText("STATISTIQUES");
 
         } else if (event.getSource() == calculatriceButton) {
 
@@ -314,7 +345,7 @@ public class DashboardController implements Initializable {
             calculatriceButton.setStyle("-fx-background-color : #f84df8;");
             aidesButton.setStyle("-fx-background-color : transparent;");
 
-//            screenName.setText("CALCULATRICE");
+            screenName.setText("CALCULATRICE");
 
         } else if (event.getSource() == aidesButton) {
 
@@ -330,8 +361,58 @@ public class DashboardController implements Initializable {
             calculatriceButton.setStyle("-fx-background-color : transparent;");
             aidesButton.setStyle("-fx-background-color : #f84df8;");
 
-//            screenName.setText("AIDES");
+            screenName.setText("AIDES");
 
+        }
+
+    }
+
+    public void addProd() throws IOException {
+
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("addProduct.fxml")));
+        Stage stg = new Stage();
+
+        Scene scn = new Scene(root);
+
+        stg.initStyle(StageStyle.TRANSPARENT);
+
+        stg.setTitle("Ajout de produit");
+        stg.setScene(scn);
+        stg.show();
+
+    }
+
+    public void addCat() throws IOException {
+
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("addCategories.fxml")));
+        Stage stg = new Stage();
+
+        Scene scn = new Scene(root);
+
+        stg.initStyle(StageStyle.TRANSPARENT);
+
+        stg.setTitle("Ajout de categories");
+        stg.setScene(scn);
+        stg.show();
+
+    }
+
+    public ObservableList<CategoryData> addcategoryListeData() {
+
+        ObservableList<CategoryData> catListe = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM categories";
+        Connection connection = Database.shop_connectDB();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                CategoryData categoryData = new CategoryData(resultSet.getString("Nom"), );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
     }

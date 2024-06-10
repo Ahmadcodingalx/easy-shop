@@ -9,7 +9,7 @@ public class Database {
     static String port = "3306";
     static String user = "root";
     static String password = "";
-    static String database = "market_easy";
+    static String database = "easy_shop";
     static String URL = "jdbc:mysql://"+host+":"+port+"/"+database;
 
 

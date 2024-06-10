@@ -3,6 +3,7 @@ module org.example.marketeasy {
     requires javafx.fxml;
     requires java.sql;
     requires jdk.jdi;
+    requires mysql.connector.j;
 
 
     opens org.example.marketeasy to javafx.fxml;
