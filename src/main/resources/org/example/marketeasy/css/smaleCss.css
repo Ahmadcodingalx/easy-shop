@@ -1,0 +1,72 @@
+
+.text-zone {
+    -fx-background-radius : 10px;
+    -fx-border-radius : 10px;
+    -fx-border-width : 1px;
+    -fx-border-color : linear-gradient(to top, #cc75ff, #dda6ff, #dda6ff, #dda6ff, #dda6ff, #cc75ff);
+}
+
+.text-zone2 {
+    -fx-background-radius : 5px;
+    -fx-border-radius : 5px;
+    -fx-border-width : 1px;
+    -fx-border-color : red;
+}
+
+.text-zone2:focused {
+    -fx-border-color : red;
+}
+
+.delete2-button {
+    -fx-background-color : #ff0000;
+    -fx-font-size : 15px;
+}
+
+.delete2-button:hover {
+    -fx-background-color : #ff5353;
+    -fx-font-size : 15px;
+}
+
+.add-button {
+    -fx-background-color : #0099ff;
+    -fx-font-size : 15px;
+}
+
+.add-button:hover {
+    -fx-background-color : #53bdff;
+    -fx-font-size : 15px;
+}
+
+.section {
+    -fx-border-radius : 10px;
+    -fx-background-radius : 10px;
+    -fx-background-color : #fff;
+
+}
+
+.section:hover {
+    -fx-border-width : 5px;
+    -fx-border-color : #000000;
+}
+
+.create-button {
+    -fx-background-radius : 15px;
+    -fx-background-color : linear-gradient(to top, #00ff2b, #89ff9b, #89ff9b, #00ff2b);
+    -fx-border-radius : 15px;
+    -fx-border-color : #cc75ff;
+    -fx-border-width : 2px;
+    -fx-cursor : hand;
+    -fx-font-size : 15px;
+}
+
+.screen-add {
+    -fx-background-color : #e1b3ff;
+}
+
+.create-button:hover {
+    -fx-background-color : #17d033;
+}
+
+.create-button:focused {
+    -fx-background-color : #2a8037;
+}

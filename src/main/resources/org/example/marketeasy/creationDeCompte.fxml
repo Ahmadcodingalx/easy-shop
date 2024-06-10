@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.marketeasy.controllers.CreationDeCompteController">
+    <children>
+      <BorderPane>
+         <center>
+              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #a8dcff;">
+                  <children>
+                  <AnchorPane layoutX="14.0" layoutY="77.0" prefHeight="460.0" prefWidth="358.0" styleClass="section" stylesheets="@css/smaleCss.css">
+                     <children>
+                        <VBox layoutX="25.0" layoutY="91.0" spacing="40.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label text="Nom : *" />
+                                          <TextField fx:id="creationNom" prefHeight="35.0" prefWidth="308.0" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label text="Prénom : *" />
+                                    <TextField fx:id="creationPrenom" prefHeight="35.0" prefWidth="308.0" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label text="Numéro de téléphone : *" />
+                                    <TextField fx:id="creationTel" prefHeight="35.0" prefWidth="308.0" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label text="Quartier : *" />
+                                    <TextField fx:id="creationQuartier" prefHeight="35.0" prefWidth="308.0" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <Text layoutX="76.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informations personnelles" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+                  <Button fx:id="signinButton" layoutX="615.0" layoutY="544.0" mnemonicParsing="false" onAction="#creerUnCompte" onMouseClicked="#creerUnCompte" prefHeight="35.0" prefWidth="138.0" styleClass="create-button" stylesheets="@css/smaleCss.css" text="Créer" />
+                  <AnchorPane layoutX="395.0" layoutY="77.0" prefHeight="223.0" prefWidth="358.0" styleClass="section" stylesheets="@css/smaleCss.css">
+                     <children>
+                        <VBox layoutX="25.0" layoutY="60.0" spacing="15.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label text="Nom d'utilisateur : *" />
+                                    <TextField fx:id="creationUsername" prefHeight="35.0" prefWidth="308.0" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label text="Mot de passe : *" />
+                                    <TextField fx:id="creationPassword" prefHeight="35.0" prefWidth="308.0" styleClass="text-zone" stylesheets="@css/smaleCss.css" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <Text layoutX="70.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informations de connection" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="393.0" layoutY="307.0" prefHeight="230.0" prefWidth="358.0" styleClass="section" stylesheets="@css/smaleCss.css">
+                     <children>
+                        <VBox layoutX="25.0" layoutY="45.0" spacing="15.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label text="Question : *" />
+                                    <TextArea fx:id="creationQuestion" prefHeight="60.0" prefWidth="308.0" styleClass="text-zone" stylesheets="@css/smaleCss.css" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label text="Réponse: *" />
+                                    <TextArea fx:id="creationReponse" prefHeight="60.0" prefWidth="308.0" styleClass="text-zone" stylesheets="@css/smaleCss.css" wrapText="true" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <Text layoutX="58.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informations de recupperation" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+                        <Label layoutX="283.0" layoutY="14.0" text="Creation de compte">
+                            <font>
+                                <Font name="Arial Bold" size="25.0" />
+                            </font>
+                        </Label>
+                  </children>
+              </AnchorPane>
+         </center>
+         <top>
+            <AnchorPane BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefHeight="30.0" prefWidth="800.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                              <Label layoutX="3.0" layoutY="3.0" text="EASY SHOP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                  <font>
+                                      <Font name="Algerian" size="20.0" />
+                                  </font>
+                              </Label>
+                            <Button layoutX="731.0" layoutY="4.0" mnemonicParsing="false" onAction="#close" prefWidth="45.0" styleClass="close-button" stylesheets="@css/styles.css" text="X" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="697.0" layoutY="2.0" mnemonicParsing="false" onAction="#hide" onMouseClicked="#hide" prefHeight="27.0" prefWidth="50.0" styleClass="hide-button" stylesheets="@css/styles.css" text="--" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </top>
+      </BorderPane>
+    </children>
+</StackPane>
