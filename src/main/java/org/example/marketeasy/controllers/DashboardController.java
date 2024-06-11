@@ -652,6 +652,7 @@ public class DashboardController implements Initializable {
 
     private Statement statement;
 
+
     @FXML
     private TableColumn<?, String> historyOfCalc;
 
