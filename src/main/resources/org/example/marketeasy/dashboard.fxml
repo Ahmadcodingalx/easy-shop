@@ -558,7 +558,7 @@
                                                       <Button fx:id="deleteAllProdButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="145.0" styleClass="delete-all-button" stylesheets="@css/styles.css" text="Supprimer tout" />
                                                    </children>
                                                 </HBox>
-                                                <TextField fx:id="searchTextZone" layoutX="8.0" layoutY="166.0" onKeyTyped="#searchProd" prefHeight="30.0" prefWidth="457.0" promptText="Rechercher" styleClass="search" stylesheets="@css/styles.css">
+                                                <TextField fx:id="searchTextZone" layoutX="8.0" layoutY="162.0" onKeyTyped="#searchProd" prefHeight="30.0" prefWidth="457.0" promptText="Rechercher" styleClass="search" stylesheets="@css/styles.css">
                                                    <padding>
                                                       <Insets left="5.0" right="28.0" />
                                                    </padding>
