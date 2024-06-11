@@ -105,7 +105,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <BorderPane fx:id="screen1" layoutX="178.0" layoutY="204.0" prefHeight="718.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <BorderPane fx:id="screen1" layoutX="178.0" layoutY="204.0" prefHeight="718.0" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <top>
                               <AnchorPane prefHeight="124.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                                  <children>
@@ -410,7 +410,7 @@
                               </AnchorPane>
                            </center>
                         </BorderPane>
-                        <AnchorPane fx:id="screen2" layoutX="173.0" layoutY="205.0" prefHeight="698.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="screen2" layoutX="173.0" layoutY="205.0" prefHeight="698.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane layoutX="66.0" layoutY="60.0" prefHeight="698.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -430,7 +430,7 @@
                                     </HBox>
                                  </top>
                                  <center>
-                                    <TableView fx:id="categorieTableView" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+                                    <TableView fx:id="categorieTableView" onMouseClicked="#addCatSelect" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
                                        <columns>
                                           <TableColumn fx:id="colCatNoms" prefWidth="94.0" text="Nom" />
                                           <TableColumn fx:id="colCatDates" prefWidth="74.0" text="Dates" />
@@ -459,10 +459,10 @@
                                              <children>
                                                 <AnchorPane>
                                                    <children>
-                                                      <TableView fx:id="prodTableView" prefHeight="446.0" prefWidth="475.0" stylesheets="@css/styles.css">
+                                                      <TableView fx:id="prodTableView" onMouseClicked="#addProdSelect" prefHeight="446.0" prefWidth="475.0" stylesheets="@css/styles.css">
                                                          <columns>
                                                             <TableColumn fx:id="colProdName" prefWidth="163.0" text="Noms" />
-                                                            <TableColumn fx:id="colProdPrice" prefWidth="128.0" text="Prix" />
+                                                            <TableColumn fx:id="colProdPrice" prefWidth="128.0" text="Prix(fcfa)" />
                                                             <TableColumn fx:id="colProdFreq" prefWidth="85.0" text="Fréquences" />
                                                             <TableColumn fx:id="colProdSize" prefWidth="97.0" text="Quantité" />
                                                          </columns>
@@ -475,66 +475,70 @@
                                        <top>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
                                              <children>
-                                                <HBox layoutX="23.0" layoutY="46.0" spacing="190.0">
+                                                <VBox layoutX="23.0" layoutY="46.0" spacing="10.0">
                                                    <children>
-                                                      <VBox spacing="10.0">
+                                                      <HBox spacing="10.0">
                                                          <children>
-                                                            <HBox spacing="10.0">
-                                                               <children>
-                                                                  <Label text="Nom : ">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font></Label>
-                                                                  <Label fx:id="prodName" text="Nom">
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font></Label>
-                                                               </children>
-                                                            </HBox>
-                                                            <HBox spacing="10.0">
-                                                               <children>
-                                                                  <Label text="Prix : ">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font></Label>
-                                                                  <Label fx:id="prodPrice" text="0.0fcfa">
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font></Label>
-                                                               </children>
-                                                            </HBox>
+                                                            <Label text="Nom : ">
+                                                               <font>
+                                                                  <Font name="System Bold" size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="prodName" text="Nom du produit">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
                                                          </children>
-                                                      </VBox>
-                                                      <VBox spacing="10.0">
+                                                      </HBox>
+                                                      <HBox spacing="10.0">
                                                          <children>
-                                                            <HBox spacing="10.0">
-                                                               <children>
-                                                                  <Label text="Quantité : ">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font></Label>
-                                                                  <Label fx:id="prodSize" text="Quantité ">
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font></Label>
-                                                               </children>
-                                                            </HBox>
-                                                            <HBox spacing="10.0">
-                                                               <children>
-                                                                  <Label text="Fréquence :">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="15.0" />
-                                                                     </font></Label>
-                                                                  <Label fx:id="prodFreq" text="0.0/jour">
-                                                                     <font>
-                                                                        <Font size="15.0" />
-                                                                     </font></Label>
-                                                               </children>
-                                                            </HBox>
+                                                            <Label text="Prix : ">
+                                                               <font>
+                                                                  <Font name="System Bold" size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="prodPrice" text="0.0fcfa">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
                                                          </children>
-                                                      </VBox>
+                                                      </HBox>
                                                    </children>
-                                                </HBox>
+                                                </VBox>
+                                                <VBox layoutX="308.0" layoutY="46.0" spacing="10.0">
+                                                   <children>
+                                                      <HBox spacing="10.0">
+                                                         <children>
+                                                            <Label text="Quantité : ">
+                                                               <font>
+                                                                  <Font name="System Bold" size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="prodSize" text="Quantité ">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox spacing="10.0">
+                                                         <children>
+                                                            <Label text="Fréquence :">
+                                                               <font>
+                                                                  <Font name="System Bold" size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="prodFreq" text="0.0/jour">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
                                                 <HBox layoutX="23.0" layoutY="6.0" spacing="10.0">
                                                    <children>
                                                       <Label text="Catégorie : ">
@@ -547,13 +551,14 @@
                                                          </font></Label>
                                                    </children>
                                                 </HBox>
-                                                <HBox layoutX="14.0" layoutY="113.0" spacing="150.0">
+                                                <HBox layoutX="14.0" layoutY="113.0" spacing="48.0">
                                                    <children>
-                                                      <Button fx:id="deleteProdButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" styleClass="delete-button" stylesheets="@css/styles.css" text="Supprimer un produit" />
+                                                      <Button fx:id="deleteProdButton" mnemonicParsing="false" onAction="#deleteProd" prefHeight="41.0" prefWidth="110.0" styleClass="delete-button" stylesheets="@css/styles.css" text="Supprimer" />
+                                                      <Button fx:id="deleteProdButton1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateProd" prefHeight="41.0" prefWidth="100.0" styleClass="update-button" stylesheets="@css/styles.css" text="Modifier" />
                                                       <Button fx:id="deleteAllProdButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="145.0" styleClass="delete-all-button" stylesheets="@css/styles.css" text="Supprimer tout" />
                                                    </children>
                                                 </HBox>
-                                                <TextField fx:id="searchTextZone" layoutX="8.0" layoutY="166.0" prefHeight="30.0" prefWidth="457.0" styleClass="search" stylesheets="@css/styles.css">
+                                                <TextField fx:id="searchTextZone" layoutX="8.0" layoutY="166.0" onKeyTyped="#searchProd" prefHeight="30.0" prefWidth="457.0" promptText="Rechercher" styleClass="search" stylesheets="@css/styles.css">
                                                    <padding>
                                                       <Insets left="5.0" right="28.0" />
                                                    </padding>

@@ -143,6 +143,16 @@
     -fx-font-size : 16px;
 }
 
+.update-button {
+    -fx-background-color : #5a51ff;
+    -fx-font-size : 16px;
+}
+
+.update-button:hover {
+    -fx-background-color : #1d1979;
+    -fx-text-fill : #fff;
+}
+
 .delete1-button:hover {
     -fx-background-color : #ff7676;
     -fx-font-size : 15px;

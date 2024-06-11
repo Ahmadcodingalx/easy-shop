@@ -76,7 +76,9 @@ public class CreationDeCompteController {
         user.setQuestion(creationQuestion.getText());
         user.setAnswers(creationReponse.getText());
 
-        String sql = "INSERT INTO shop_user (user_name, password, name, question, answer, prenom, quartier, tel) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO shop_user " +
+                "(user_name, password, name, question, answer, prenom, quartier, tel) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         connection = (Connection) Database.shop_connectDB();
 
         try {

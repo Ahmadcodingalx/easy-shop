@@ -2,6 +2,8 @@ package org.example.marketeasy.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -18,13 +21,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.marketeasy.HelloApplication;
 import org.example.marketeasy.IDBConfig.Database;
-import org.example.marketeasy.models.CategoryData;
+import org.example.marketeasy.CategoryData;
+import org.example.marketeasy.ProductData;
 import org.example.marketeasy.models.User;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -89,16 +94,16 @@ public class DashboardController implements Initializable {
     private TableColumn<?, ?> colDaySomme;
 
     @FXML
-    private TableColumn<?, ?> colProdFreq;
+    private TableColumn<ProductData, String> colProdFreq;
 
     @FXML
-    private TableColumn<?, ?> colProdName;
+    private TableColumn<ProductData, String> colProdName;
 
     @FXML
-    private TableColumn<?, ?> colProdPrice;
+    private TableColumn<ProductData, String> colProdPrice;
 
     @FXML
-    private TableColumn<?, ?> colProdSize;
+    private TableColumn<ProductData, String> colProdSize;
 
     @FXML
     private TableColumn<?, ?> colRev;
@@ -167,7 +172,7 @@ public class DashboardController implements Initializable {
     private Label prodSize;
 
     @FXML
-    private TableView<?> prodTableView;
+    private TableView<ProductData> prodTableView;
 
     @FXML
     private Button produitsButton;
@@ -270,16 +275,6 @@ public class DashboardController implements Initializable {
 //        System.out.println(userName);
     }
 
-    @Override
-//    Oppération à éffectuer dès le lancement de l'appli
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        addHistoryShowData();
-        displayUsername();
-        screenName.setText("ACCEUIL");
-        acceuilButton.setStyle("-fx-background-color : #f84df8;");
-//        screenUsername.setText(user.getUsername());
-    }
-
     //    Pour basculer entre les écrans
     public void screenChange(ActionEvent event) {
 
@@ -314,6 +309,10 @@ public class DashboardController implements Initializable {
             aidesButton.setStyle("-fx-background-color : transparent;");
 
             screenName.setText("PRODUITS");
+
+            addCategoryShowData();
+            addProductShowData();
+            searchProd();
 
         } else if (event.getSource() == statistiquesButton) {
 
@@ -382,6 +381,103 @@ public class DashboardController implements Initializable {
 
     }
 
+    public void updateProd() throws IOException {
+
+        Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("updateProduct.fxml")));
+        Stage stg = new Stage();
+
+        Scene scn = new Scene(root);
+
+        stg.initStyle(StageStyle.TRANSPARENT);
+
+        stg.setTitle("Modifier un produit");
+        stg.setScene(scn);
+        stg.show();
+
+    }
+
+    public void deleteProd() {
+
+        String sqldelete = "DELETE FROM produits WHERE nom = '" +
+                prodName.getText() + "'";
+
+        Connection connection = Database.shop_connectDB();
+
+        try {
+            Alert alert;
+
+            if (prodName.getText().equals("Nom du produit")) {
+
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Message d'erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("Choisir d'abord le produit à supprimer");
+                alert.showAndWait();
+
+            } else {
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Message de confiramtion");
+                alert.setHeaderText(null);
+                alert.setContentText("Voulez-vous vraiment supprimer " +prodName.getText()+ " ?");
+
+                Optional<ButtonType> optional = alert.showAndWait();
+
+                if (optional.get().equals(ButtonType.OK)) {
+                    PreparedStatement prepar = connection.prepareStatement(sqldelete);
+                    prepar.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Message d'information");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Suppression réussie!");
+                    alert.showAndWait();
+
+                } else {
+                    return;
+                }
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void searchProd() {
+
+        FilteredList<ProductData> filter = new FilteredList<>(addProductList, e-> true);
+
+        searchTextZone.textProperty().addListener((Observable, oldeValue, newValues) -> {
+
+            filter.setPredicate(predicateProductData ->{
+
+                if (newValues == null || newValues.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValues.toLowerCase();
+
+                return predicateProductData.getProdName().toLowerCase().contains(searchKey);
+
+//                else if (predicateProductData.getProdPrice().toLowerCase().contains(searchKey)) {
+//                    return true;
+//                } else if (predicateProductData.getProdSize().toLowerCase().contains(searchKey)){
+//                    return true;
+//                } else return false;
+//                else if (predicateProductData.getProdFreq().toLowerCase().contains(searchKey)) {
+////                    return true;
+//                }
+            });
+        });
+
+        SortedList<ProductData> sortedList = new SortedList<>(filter);
+
+        sortedList.comparatorProperty().bind(prodTableView.comparatorProperty());
+        prodTableView.setItems(sortedList);
+
+    }
+
     public void addCat() throws IOException {
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("addCategories.fxml")));
@@ -397,7 +493,8 @@ public class DashboardController implements Initializable {
 
     }
 
-    public ObservableList<CategoryData> addcategoryListeData() {
+//    pours ajouter les éléments de la bd à l'Observablelist
+    public ObservableList<CategoryData> addCategoryListeData() {
 
         ObservableList<CategoryData> catListe = FXCollections.observableArrayList();
         String sql = "SELECT * FROM categories";
@@ -408,14 +505,127 @@ public class DashboardController implements Initializable {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                CategoryData categoryData = new CategoryData(resultSet.getString("Nom"), );
+                CategoryData categoryData = new CategoryData(
+                        resultSet.getString("nom"),
+                        resultSet.getString("date_d_ajout"),
+                        resultSet.getString("total_de_produits"),
+                        resultSet.getString("produits_rouges"));
+
+                catListe.add(categoryData);
+
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return catListe;
+    }
+
+    public void addCatSelect() {
+
+        CategoryData categoryData = categorieTableView.getSelectionModel().getSelectedItem();
+
+        int number = categorieTableView.getSelectionModel().getSelectedIndex();
+
+        if ((number - 1) < -1) {
+            return;
+        }
+
+        categorieName.setText(categoryData.getCatName());
 
     }
+
+    private ObservableList<CategoryData> addCategoryList;
+
+    public void addCategoryShowData() {  //pour afficher les éléments de la bd
+
+        addCategoryList = addCategoryListeData();
+
+        colCatNoms.setCellValueFactory(new PropertyValueFactory<>("catName"));
+        colCatDates.setCellValueFactory(new PropertyValueFactory<>("catDate"));
+        colCatTotalProduits.setCellValueFactory(new PropertyValueFactory<>("catTotProd"));
+        colCatProduitRouges.setCellValueFactory(new PropertyValueFactory<>("catRedProd"));
+
+        categorieTableView.setItems(addCategoryList);
+
+    }
+
+    public ObservableList<ProductData>  addProductListeData() {
+
+        ObservableList<ProductData> prodListe = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM produits";
+        Connection connection = Database.shop_connectDB();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                ProductData productData = new ProductData(
+                        resultSet.getString("nom"),
+                        resultSet.getString("prix"),
+                        resultSet.getString("frequence"),
+                        resultSet.getString("quantite"));
+
+                prodListe.add(productData);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return prodListe;
+    }
+
+    private ObservableList<ProductData> addProductList;
+
+    public void addProductShowData() {  //pour afficher les éléments de la bd
+
+        addProductList = addProductListeData();
+
+        colProdName.setCellValueFactory(new PropertyValueFactory<>("prodName"));
+        colProdPrice.setCellValueFactory(new PropertyValueFactory<>("prodPrice"));
+        colProdFreq.setCellValueFactory(new PropertyValueFactory<>("prodFreq"));
+        colProdSize.setCellValueFactory(new PropertyValueFactory<>("prodSize"));
+
+        prodTableView.setItems(addProductList);
+
+    }
+
+    public void addProdSelect() {
+
+        ProductData productData = prodTableView.getSelectionModel().getSelectedItem();
+
+        int number = prodTableView.getSelectionModel().getSelectedIndex();
+
+        if ((number - 1) < -1) {
+            return;
+        }
+
+        prodName.setText(productData.getProdName());
+        prodSize.setText(productData.getProdSize());
+        prodPrice.setText(productData.getProdPrice() + "fcfa");
+        prodFreq.setText(productData.getProdFreq() + "/jour");
+
+    }
+
+
+
+
+    @Override
+//    Oppération à éffectuer dès le lancement de l'appli
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        addHistoryShowData();
+        displayUsername();
+        screenName.setText("ACCEUIL");
+        acceuilButton.setStyle("-fx-background-color : #f84df8;");
+//        screenUsername.setText(user.getUsername());
+
+        addCategoryShowData();
+        addProductShowData();
+    }
+
+
 
 //    --------------------------------------Générale fin----------------------------------------------------------------
 //    ---------------------------Calculatrice Zone debut----------------------------------------------------------------

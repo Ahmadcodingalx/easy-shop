@@ -1,4 +1,4 @@
-package org.example.marketeasy.models;
+package org.example.marketeasy;
 
 public class CategoryData {
 
