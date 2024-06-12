@@ -5,9 +5,11 @@ public class ProductData {
     private String prodName;
     private String prodDate;
     private String prodSize;
+
     private String prodFreq;
     private String prodSeuil;
     private String prodPrice;
+    private int prodSomme;
 
     public ProductData (String prodName,  String prodPrice,
                         String prodFreq, String prodSize) {
@@ -17,6 +19,14 @@ public class ProductData {
         this.prodFreq = prodFreq;
         this.prodPrice = prodPrice;
 
+    }
+
+    public int getProdSomme() {
+        return prodSomme;
+    }
+
+    public void setProdSomme(int prodSomme) {
+        this.prodSomme = prodSomme;
     }
 
 //    public ProductData (String prodName, String prodDate, String prodSize,

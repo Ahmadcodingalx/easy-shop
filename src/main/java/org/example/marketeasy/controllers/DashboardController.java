@@ -82,6 +82,9 @@ public class DashboardController implements Initializable {
     private TableColumn<CategoryData, String> colCatProduitRouges;
 
     @FXML
+    private TableColumn<CategoryData, String> colProdprices;
+
+    @FXML
     private TableColumn<CategoryData, String> colCatTotalProduits;
 
     @FXML
@@ -565,7 +568,8 @@ public class DashboardController implements Initializable {
                         resultSet.getString("nom"),
                         resultSet.getString("prix"),
                         resultSet.getString("frequence"),
-                        resultSet.getString("quantite"));
+                        resultSet.getString("quantite")
+                );
 
                 prodListe.add(productData);
 
@@ -587,6 +591,7 @@ public class DashboardController implements Initializable {
         colProdPrice.setCellValueFactory(new PropertyValueFactory<>("prodPrice"));
         colProdFreq.setCellValueFactory(new PropertyValueFactory<>("prodFreq"));
         colProdSize.setCellValueFactory(new PropertyValueFactory<>("prodSize"));
+//        colProdprices.setCellValueFactory(new PropertyValueFactory<>("prodSomme"));
 
         prodTableView.setItems(addProductList);
 
@@ -610,7 +615,33 @@ public class DashboardController implements Initializable {
     }
 
 
+    public void updateScreen() {
+        addCategoryShowData();
+        addProductShowData();
+    }
 
+
+    public void varlist() {
+
+        String var = null;
+        String sql = "SELECT prix FROM produits WHERE nom = ?";
+        Connection connection = Database.shop_connectDB();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "Lait");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                var = resultSet.getString("prix");
+                System.out.println(var);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
 //    Oppération à éffectuer dès le lancement de l'appli
@@ -621,8 +652,8 @@ public class DashboardController implements Initializable {
         acceuilButton.setStyle("-fx-background-color : #f84df8;");
 //        screenUsername.setText(user.getUsername());
 
-        addCategoryShowData();
-        addProductShowData();
+        updateScreen();
+        varlist();
     }
 
 

@@ -26,11 +26,11 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.marketeasy.controllers.DashboardController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#addProdSelect" prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.marketeasy.controllers.DashboardController">
    <children>
-      <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFF;" stylesheets="@css/styles.css">
+      <AnchorPane fx:id="main_form" onMouseMoved="#addProdSelect" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFF;" stylesheets="@css/styles.css">
          <children>
-            <BorderPane prefHeight="750.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <BorderPane onMouseMoved="#addProdSelect" prefHeight="750.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <left>
                   <AnchorPane prefHeight="720.0" prefWidth="150.0" styleClass="nav-form" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
                      <children>
@@ -103,9 +103,9 @@
                   </AnchorPane>
                </top>
                <center>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <AnchorPane onMouseMoved="#addProdSelect" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <BorderPane fx:id="screen1" layoutX="178.0" layoutY="204.0" prefHeight="718.0" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <BorderPane fx:id="screen1" layoutX="178.0" layoutY="204.0" onMouseMoved="#addProdSelect" prefHeight="718.0" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <top>
                               <AnchorPane prefHeight="124.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                                  <children>
@@ -410,7 +410,7 @@
                               </AnchorPane>
                            </center>
                         </BorderPane>
-                        <AnchorPane fx:id="screen2" layoutX="173.0" layoutY="205.0" prefHeight="698.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="screen2" layoutX="173.0" layoutY="205.0" onMouseMoved="#addProdSelect" prefHeight="698.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane layoutX="66.0" layoutY="60.0" prefHeight="698.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -448,7 +448,7 @@
                                  <top>
                                     <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                                        <children>
-                                          <Button fx:id="addProduit1Button" mnemonicParsing="false" onAction="#addProd" prefHeight="50.0" prefWidth="400.0" style="-fx-background-radius: 50;" styleClass="add-button" stylesheets="@css/styles.css" text="Ajouter un produit" />
+                                          <Button fx:id="addProduit1Button" mnemonicParsing="false" onAction="#addProd" onMouseEntered="#addProdSelect" onMouseExited="#addProdSelect" onMouseMoved="#addProdSelect" prefHeight="50.0" prefWidth="400.0" style="-fx-background-radius: 50;" styleClass="add-button" stylesheets="@css/styles.css" text="Ajouter un produit" />
                                        </children>
                                     </HBox>
                                  </top>
@@ -459,7 +459,7 @@
                                              <children>
                                                 <AnchorPane>
                                                    <children>
-                                                      <TableView fx:id="prodTableView" onMouseClicked="#addProdSelect" prefHeight="446.0" prefWidth="475.0" stylesheets="@css/styles.css">
+                                                      <TableView fx:id="prodTableView" onMouseEntered="#addProdSelect" onMouseMoved="#addProdSelect" prefHeight="446.0" prefWidth="475.0" stylesheets="@css/styles.css">
                                                          <columns>
                                                             <TableColumn fx:id="colProdName" prefWidth="163.0" text="Noms" />
                                                             <TableColumn fx:id="colProdPrice" prefWidth="128.0" text="Prix(fcfa)" />
@@ -558,7 +558,7 @@
                                                       <Button fx:id="deleteAllProdButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="145.0" styleClass="delete-all-button" stylesheets="@css/styles.css" text="Supprimer tout" />
                                                    </children>
                                                 </HBox>
-                                                <TextField fx:id="searchTextZone" layoutX="8.0" layoutY="166.0" onKeyTyped="#searchProd" prefHeight="30.0" prefWidth="457.0" promptText="Rechercher" styleClass="search" stylesheets="@css/styles.css">
+                                                <TextField fx:id="searchTextZone" layoutX="8.0" layoutY="162.0" onKeyTyped="#searchProd" prefHeight="30.0" prefWidth="457.0" promptText="Rechercher" styleClass="search" stylesheets="@css/styles.css">
                                                    <padding>
                                                       <Insets left="5.0" right="28.0" />
                                                    </padding>
@@ -578,7 +578,7 @@
                               </BorderPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="screen3" layoutX="288.0" layoutY="268.0" prefHeight="696.0" prefWidth="880.0" styleClass="background3" stylesheets="@css/styles.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="screen3" layoutX="288.0" layoutY="268.0" onMouseMoved="#addProdSelect" prefHeight="696.0" prefWidth="880.0" styleClass="background3" stylesheets="@css/styles.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane fx:id="Standard" layoutX="36.0" layoutY="87.0" prefHeight="498.0" prefWidth="800.0">
                                  <children>
@@ -810,7 +810,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="screen4" layoutX="75.0" layoutY="169.0" prefHeight="696.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="screen4" layoutX="75.0" layoutY="169.0" onMouseMoved="#addProdSelect" prefHeight="696.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane prefHeight="696.0" prefWidth="880.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -841,7 +841,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <ScrollPane fx:id="screen5" layoutX="294.0" layoutY="135.0" prefHeight="696.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane fx:id="screen5" layoutX="294.0" layoutY="135.0" onMouseMoved="#addProdSelect" prefHeight="696.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <AnchorPane style="-fx-background-color: #fff;" />
                            </content>
