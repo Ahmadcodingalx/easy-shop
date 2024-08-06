@@ -1,5 +1,6 @@
 package org.example.marketeasy.controllers;
 
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,14 +18,21 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.example.marketeasy.HelloApplication;
 import org.example.marketeasy.IDBConfig.Database;
 import org.example.marketeasy.CategoryData;
 import org.example.marketeasy.ProductData;
+import org.example.marketeasy.models.Articles;
 import org.example.marketeasy.models.User;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -127,6 +135,9 @@ public class DashboardController implements Initializable {
     private TableView<?> dayTableView;
 
     @FXML
+    private Label tmp_id;
+
+    @FXML
     private Button deleteAllProdButton;
 
     @FXML
@@ -199,6 +210,9 @@ public class DashboardController implements Initializable {
     private ScrollPane screen5;
 
     @FXML
+    private AnchorPane screen6;
+
+    @FXML
     private Label screenName;
 
     @FXML
@@ -216,6 +230,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button statistiquesButton;
+
+    @FXML
+    private Button entrerSortieButton;
 
     @FXML
     private Label vendrediPrix;
@@ -269,7 +286,8 @@ public class DashboardController implements Initializable {
         this.screenUsername = screenUsername;
     }
 
-        User user = new User();
+    User user = new User();
+    Articles produit = new Articles();
 
     public void displayUsername() {
 //        String userName = user.getUsername();
@@ -288,12 +306,14 @@ public class DashboardController implements Initializable {
             screen3.setVisible(false);
             screen4.setVisible(false);
             screen5.setVisible(false);
+            screen6.setVisible(false);
 
             acceuilButton.setStyle("-fx-background-color : #f84df8;");
             statistiquesButton.setStyle("-fx-background-color : transparent;");
             produitsButton.setStyle("-fx-background-color : transparent;");
             calculatriceButton.setStyle("-fx-background-color : transparent;");
             aidesButton.setStyle("-fx-background-color : transparent;");
+            entrerSortieButton.setStyle("-fx-background-color : transparent;");
 
             screenName.setText("ACCEUIL");
 
@@ -304,12 +324,14 @@ public class DashboardController implements Initializable {
             screen3.setVisible(false);
             screen4.setVisible(false);
             screen5.setVisible(false);
+            screen6.setVisible(false);
 
             acceuilButton.setStyle("-fx-background-color : transparent;");
             statistiquesButton.setStyle("-fx-background-color : transparent;");
             produitsButton.setStyle("-fx-background-color : #f84df8;");
             calculatriceButton.setStyle("-fx-background-color : transparent;");
             aidesButton.setStyle("-fx-background-color : transparent;");
+            entrerSortieButton.setStyle("-fx-background-color : transparent;");
 
             screenName.setText("PRODUITS");
 
@@ -324,12 +346,14 @@ public class DashboardController implements Initializable {
             screen3.setVisible(false);
             screen4.setVisible(true);
             screen5.setVisible(false);
+            screen6.setVisible(false);
 
             acceuilButton.setStyle("-fx-background-color : transparent;");
             statistiquesButton.setStyle("-fx-background-color : #f84df8;");
             produitsButton.setStyle("-fx-background-color : transparent;");
             calculatriceButton.setStyle("-fx-background-color : transparent;");
             aidesButton.setStyle("-fx-background-color : transparent;");
+            entrerSortieButton.setStyle("-fx-background-color : transparent;");
 
             screenName.setText("STATISTIQUES");
 
@@ -340,12 +364,14 @@ public class DashboardController implements Initializable {
             screen3.setVisible(true);
             screen4.setVisible(false);
             screen5.setVisible(false);
+            screen6.setVisible(false);
 
             acceuilButton.setStyle("-fx-background-color : transparent;");
             statistiquesButton.setStyle("-fx-background-color : transparent;");
             produitsButton.setStyle("-fx-background-color : transparent;");
             calculatriceButton.setStyle("-fx-background-color : #f84df8;");
             aidesButton.setStyle("-fx-background-color : transparent;");
+            entrerSortieButton.setStyle("-fx-background-color : transparent;");
 
             screenName.setText("CALCULATRICE");
 
@@ -356,14 +382,35 @@ public class DashboardController implements Initializable {
             screen3.setVisible(false);
             screen4.setVisible(false);
             screen5.setVisible(true);
+            screen6.setVisible(false);
+
 
             acceuilButton.setStyle("-fx-background-color : transparent;");
             statistiquesButton.setStyle("-fx-background-color : transparent;");
             produitsButton.setStyle("-fx-background-color : transparent;");
             calculatriceButton.setStyle("-fx-background-color : transparent;");
             aidesButton.setStyle("-fx-background-color : #f84df8;");
+            entrerSortieButton.setStyle("-fx-background-color : transparent;");
 
             screenName.setText("AIDES");
+
+        } else if (event.getSource() == entrerSortieButton) {
+
+            screen1.setVisible(false);
+            screen2.setVisible(false);
+            screen3.setVisible(false);
+            screen4.setVisible(false);
+            screen5.setVisible(false);
+            screen6.setVisible(true);
+
+            acceuilButton.setStyle("-fx-background-color : transparent;");
+            statistiquesButton.setStyle("-fx-background-color : transparent;");
+            produitsButton.setStyle("-fx-background-color : transparent;");
+            calculatriceButton.setStyle("-fx-background-color : transparent;");
+            aidesButton.setStyle("-fx-background-color : transparent;");
+            entrerSortieButton.setStyle("-fx-background-color : #f84df8;");
+
+            screenName.setText("Mouvements");
 
         }
 
@@ -386,6 +433,20 @@ public class DashboardController implements Initializable {
 
     public void updateProd() throws IOException {
 
+//        String query = "SELECT id FROM users WHERE name = ?";
+//
+//        try (Connection conn = Database.shop_connectDB();
+//             PreparedStatement stmt = conn.prepareStatement(query)) {
+//            stmt.setInt(1, userId);
+//
+//            ResultSet rs = stmt.executeQuery();
+//            if (rs.next()) {
+//                name = rs.getString("name");
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
         Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("updateProduct.fxml")));
         Stage stg = new Stage();
 
@@ -397,9 +458,11 @@ public class DashboardController implements Initializable {
         stg.setScene(scn);
         stg.show();
 
+//        produit.setTmpId();
+
     }
 
-    public void deleteProd() {
+    public void deleteProd() throws SQLException {
 
         String sqldelete = "DELETE FROM produits WHERE nom = '" +
                 prodName.getText() + "'";
@@ -436,6 +499,8 @@ public class DashboardController implements Initializable {
                     alert.setContentText("Suppression réussie!");
                     alert.showAndWait();
 
+                    updateScreen();
+
                 } else {
                     return;
                 }
@@ -444,6 +509,58 @@ public class DashboardController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        connection.close();
+
+    }
+
+    public void deleteCat() throws SQLException {
+
+        String sqldelete = "DELETE FROM categories WHERE nom = '" +
+                categorieName.getText() + "'";
+
+        Connection connection = Database.shop_connectDB();
+
+        try {
+            Alert alert;
+
+            if (categorieName.getText().equals("Catégorie ")) {
+
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Message d'erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("Choisir d'abord la catégorie à supprimer");
+                alert.showAndWait();
+
+            } else {
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Message de confiramtion");
+                alert.setHeaderText(null);
+                alert.setContentText("Voulez-vous vraiment supprimer " +categorieName.getText()+ " ?");
+
+                Optional<ButtonType> optional = alert.showAndWait();
+
+                if (optional.get().equals(ButtonType.OK)) {
+                    PreparedStatement prepar = connection.prepareStatement(sqldelete);
+                    prepar.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Message d'information");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Suppression réussie!");
+                    alert.showAndWait();
+
+                    updateScreen();
+
+                } else {
+                    return;
+                }
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        connection.close();
 
     }
 
@@ -508,7 +625,7 @@ public class DashboardController implements Initializable {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                CategoryData categoryData = new CategoryData(
+                CategoryData categoryData = new  CategoryData(
                         resultSet.getString("nom"),
                         resultSet.getString("date_d_ajout"),
                         resultSet.getString("total_de_produits"),
@@ -517,6 +634,7 @@ public class DashboardController implements Initializable {
                 catListe.add(categoryData);
 
             }
+            connection.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -538,11 +656,9 @@ public class DashboardController implements Initializable {
 
     }
 
-    private ObservableList<CategoryData> addCategoryList;
-
     public void addCategoryShowData() {  //pour afficher les éléments de la bd
 
-        addCategoryList = addCategoryListeData();
+         ObservableList<CategoryData> addCategoryList = addCategoryListeData();
 
         colCatNoms.setCellValueFactory(new PropertyValueFactory<>("catName"));
         colCatDates.setCellValueFactory(new PropertyValueFactory<>("catDate"));
@@ -575,6 +691,7 @@ public class DashboardController implements Initializable {
 
             }
 
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -597,7 +714,9 @@ public class DashboardController implements Initializable {
 
     }
 
-    public void addProdSelect() {
+    public void addProdSelect() throws SQLException {
+
+        String query = "SELECT id FROM produits WHERE nom = ?";
 
         ProductData productData = prodTableView.getSelectionModel().getSelectedItem();
 
@@ -607,13 +726,69 @@ public class DashboardController implements Initializable {
             return;
         }
 
+        String id = "";
+
+            Connection conn = Database.shop_connectDB();
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, prodName.getText());
+
+            ResultSet rs = preparedStatement.executeQuery();
+//            System.out.println(prodName.getText());
+            if (rs.next()) {
+                id = String.valueOf(Integer.valueOf(rs.getString("id")));
+            }
+//            System.out.println(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         prodName.setText(productData.getProdName());
         prodSize.setText(productData.getProdSize());
         prodPrice.setText(productData.getProdPrice() + "fcfa");
         prodFreq.setText(productData.getProdFreq() + "/jour");
 
+        UpdateProductController updateProductController = new UpdateProductController();
+
+//        produit.setTmpId(id);
+//        updateProductController.setTmpId(id);
+
+//        tmp_id.setText(String.valueOf(produit.getTmpId()));
+
+        //--------------------------------------
+
+        String filePath = "C:\\Users\\adngo\\Desktop\\Projets\\easy-shop\\src\\main\\resources\\org\\example\\marketeasy\\fichierTxt\\tmp_id.txt";
+        File file = new File(filePath); // Remplacez par le chemin où vous voulez créer le fichier
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+
+            if (file.createNewFile()) {
+                System.out.println("Fichier créé : " + file.getName());
+            } else {
+                System.out.println("Le fichier existe déjà.");
+            }
+
+//            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+            writer.write(id); // Écrire le contenu dans le fichier
+            System.out.println("Contenu écrit avec succès.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //--------------------------------------
+
+        conn.close();
+
     }
 
+    public Label getProdName() {
+        return prodName;
+    }
+
+    public void setProdName(Label prodName) {
+        this.prodName = prodName;
+    }
 
     public void updateScreen() {
         addCategoryShowData();
@@ -621,7 +796,7 @@ public class DashboardController implements Initializable {
     }
 
 
-    public void varlist() {
+    public void varlist() throws SQLException {
 
         String var = null;
         String sql = "SELECT prix FROM produits WHERE nom = ?";
@@ -641,6 +816,8 @@ public class DashboardController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        connection.close();
     }
 
     @Override
@@ -653,7 +830,11 @@ public class DashboardController implements Initializable {
 //        screenUsername.setText(user.getUsername());
 
         updateScreen();
-        varlist();
+        try {
+            varlist();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

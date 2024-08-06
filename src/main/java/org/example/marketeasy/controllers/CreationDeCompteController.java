@@ -17,6 +17,7 @@ import org.example.marketeasy.models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class CreationDeCompteController {
@@ -65,7 +66,7 @@ public class CreationDeCompteController {
         stg.setIconified(true);
     }
 
-    public void creerUnCompte() {
+    public void creerUnCompte() throws SQLException {
 
         user.setNom(creationNom.getText());
         user.setPrenom(creationPrenom.getText());
@@ -76,6 +77,9 @@ public class CreationDeCompteController {
         user.setQuestion(creationQuestion.getText());
         user.setAnswers(creationReponse.getText());
 
+//        Boolean premium = false;
+
+        //
         String sql = "INSERT INTO shop_user " +
                 "(user_name, password, name, question, answer, prenom, quartier, tel) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -135,6 +139,7 @@ public class CreationDeCompteController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        connection.close();
 
     }
 

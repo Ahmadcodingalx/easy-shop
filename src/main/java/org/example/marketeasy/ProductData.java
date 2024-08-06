@@ -11,7 +11,17 @@ public class ProductData {
     private String prodPrice;
     private int prodSomme;
 
-    public ProductData (String prodName,  String prodPrice,
+    public Integer tmpId;
+
+    public Integer getTmpId() {
+        return tmpId;
+    }
+
+    public void setTmpId(Integer tmpId) {
+        this.tmpId = tmpId;
+    }
+
+    public ProductData (String prodName, String prodPrice,
                         String prodFreq, String prodSize) {
 
         this.prodName = prodName;

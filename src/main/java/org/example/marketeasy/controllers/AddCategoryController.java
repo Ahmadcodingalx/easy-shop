@@ -29,23 +29,31 @@ public class AddCategoryController {
     @FXML
     private AnchorPane main_form;
 
+    //instantiation de la classe Categories (un model) par l'objet "categories"
     Categories categories = new Categories();
 
     Alert alert;
 
-    public void addCategory() {
+    //Methode pour ajouter une catégorie
+    public void addCategory() throws SQLException {
 
+        //pour envoyer des données aux setters de la classe "Categories"
         categories.setNomCategorie(categoryName.getText());
         categories.setDescription(categoryDescription.getText());
         categories.setDate(String.valueOf(categoryDate.getValue()));
 
+        //requête pour l'insertion dans la bes de donnée
         String sql = "INSERT INTO categories (nom, description, date_d_ajout) VALUES (?, ?, ?)";
+
+        //appel de la methode de connexion à la base de donnée
         Connection connection = Database.shop_connectDB();
 
         try {
 
+            //pour vérifier si la personne à remplie touts les champs du formulaire
             if (categoryName.getText().isEmpty() || categoryDate.getValue() == null) {
 
+                // bloc permettant d'afficher un alerte
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Message d'erreur");
                 alert.setHeaderText(null);
@@ -54,6 +62,7 @@ public class AddCategoryController {
 
             } else {
 
+                // requette permettant de vérifer si la catégorie exist déjà...
                 String check = "SELECT nom FROM categories WHERE nom = '" + categoryName.getText() +
                         "'";
 
@@ -84,6 +93,7 @@ public class AddCategoryController {
 
                     preparedStatement.executeUpdate();
 
+                    // pour vider les textfields
                     categoryDescription.setText("");
                     categoryName.setText("");
                     categoryDate.setValue(null);
@@ -94,9 +104,11 @@ public class AddCategoryController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        connection.close();
 
     }
 
+    // methode permetant de fermer l'écran
     public void close() {
         Stage stg = (Stage) addCategorieButton.getScene().getWindow();
         stg.close();

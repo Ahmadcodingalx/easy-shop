@@ -170,8 +170,7 @@
 .top-section:hover {
     -fx-background-color : #a453dd;
     -fx-border-width : 5px;
-    -fx-rotate : 45px;
-    -fx-translate-y : -10px;
+    -fx-translate-y : -15px;
 }
 
 .add-button:hover {

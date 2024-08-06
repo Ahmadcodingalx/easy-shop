@@ -22,6 +22,7 @@ public class HelloApplication extends Application {
     private double x = 0;
     private double y = 0;
     private String test;
+    private boolean develloper = true;
 
     private void verification() {
         String sqlReq = "SELECT * FROM shop_user";
@@ -53,6 +54,8 @@ public class HelloApplication extends Application {
         String pages;
         if (test == null) {
             pages = "creationDeCompte.fxml";
+        } else if (develloper) {
+            pages = "dashboard.fxml";
         } else {
             pages = "connection.fxml";
         }

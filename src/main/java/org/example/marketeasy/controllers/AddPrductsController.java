@@ -40,7 +40,7 @@ public class AddPrductsController {
     Statement statement;
     ResultSet resultSet;
 
-    public void addProducts() {
+    public void addProducts() throws SQLException {
 
         articles.setNomDuProduit(productName.getText());
         articles.setPrix(productPrice.getText());
@@ -105,6 +105,7 @@ public class AddPrductsController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        connection.close();
 
     }
 

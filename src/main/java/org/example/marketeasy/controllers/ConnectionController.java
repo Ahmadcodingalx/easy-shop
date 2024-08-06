@@ -56,7 +56,7 @@ public class ConnectionController {
 
     User user = new User();
 
-    public void connection() {
+    public void connection() throws SQLException {
 
         user.setUsername(username.getText());
 
@@ -124,11 +124,11 @@ public class ConnectionController {
         } catch (SQLException | IOException e ) {
             throw new RuntimeException(e);
         }
-
+        connection.close();
 
     }
 
-    public void AdminLoginkey(KeyEvent clique) {
+    public void AdminLoginkey(KeyEvent clique) throws SQLException {
 
         if (clique.getCode() == KeyCode.SPACE || (clique.getCode() == KeyCode.ENTER)) {
             connection(); //La methode s'execute l'orsqu'on appuie sur la touche ENTRER
