@@ -118,7 +118,7 @@ public class UpdateProductController implements Initializable {
 
         //--------------------------------------
 
-        String filePath = "C:\\Users\\adngo\\Desktop\\Projets\\easy-shop\\src\\main\\resources\\org\\example\\marketeasy\\fichierTxt\\tmp_id.txt";
+        String filePath = "C:\\Users\\adngo\\Desktop\\Projets\\easy-shop\\src\\main\\resources\\org\\example\\marketeasy\\fichierTxt\\prod_tmp_id.txt";
         File file = new File(filePath); // Remplacez par le chemin où vous voulez créer le fichier
 
         //--------------------------------------

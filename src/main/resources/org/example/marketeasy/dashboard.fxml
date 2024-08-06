@@ -81,6 +81,14 @@
                                     <Font name="Algerian" size="15.0" />
                                  </font>
                               </Label>
+                              <Label fx:id="heure" alignment="CENTER" contentDisplay="CENTER" text="00:00">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
                            </children>
                         </HBox>
                         <Label fx:id="dateDuJour" layoutX="14.0" layoutY="8.0" text="00/00/0000" />
@@ -412,9 +420,9 @@
                               </AnchorPane>
                            </center>
                         </BorderPane>
-                        <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox fx:id="screen2" alignment="CENTER" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane fx:id="screen2" onMouseMoved="#addProdSelect" prefHeight="698.0" prefWidth="880.0">
+                              <AnchorPane onMouseMoved="#addProdSelect" prefHeight="698.0" prefWidth="880.0">
                                  <children>
                                     <BorderPane layoutX="66.0" layoutY="60.0" prefHeight="698.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <top>
@@ -858,9 +866,9 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <ScrollPane fx:id="screen5" layoutX="294.0" layoutY="135.0" onMouseMoved="#addProdSelect" prefHeight="696.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane fx:id="screen5" layoutX="294.0" layoutY="135.0" onMouseMoved="#addProdSelect" prefHeight="696.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <AnchorPane style="-fx-background-color: #fff;" />
+                              <AnchorPane fx:id="item_cat" prefWidth="500.0" style="-fx-background-color: blue;" />
                            </content>
                         </ScrollPane>
                         <AnchorPane fx:id="screen6" layoutX="225.0" layoutY="101.0" prefHeight="696.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

@@ -1,5 +1,7 @@
 package org.example.marketeasy.controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,10 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -36,6 +35,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -132,6 +132,9 @@ public class DashboardController implements Initializable {
     private Label dayRev;
 
     @FXML
+    private Label heure;
+
+    @FXML
     private TableView<?> dayTableView;
 
     @FXML
@@ -198,7 +201,7 @@ public class DashboardController implements Initializable {
     private BorderPane screen1;
 
     @FXML
-    private AnchorPane screen2;
+    private HBox screen2;
 
     @FXML
     private AnchorPane screen3;
@@ -654,7 +657,34 @@ public class DashboardController implements Initializable {
 
         categorieName.setText(categoryData.getCatName());
 
+        //--------------------------------------
+        String id = "";
+
+        String filePath = "C:\\Users\\adngo\\Desktop\\Projets\\easy-shop\\src\\main\\resources\\org\\example\\marketeasy\\fichierTxt\\cat_tmp_id.txt";
+        File file = new File(filePath); // Remplacez par le chemin où vous voulez créer le fichier
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+
+            if (file.createNewFile()) {
+                System.out.println("Fichier créé : " + file.getName());
+            } else {
+                System.out.println("Le fichier existe déjà.");
+            }
+
+//            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+            writer.write(id); // Écrire le contenu dans le fichier
+            System.out.println("Contenu écrit avec succès.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //--------------------------------------
+
     }
+//    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+//        addProductShowData();
+//    }));
 
     public void addCategoryShowData() {  //pour afficher les éléments de la bd
 
@@ -757,7 +787,7 @@ public class DashboardController implements Initializable {
 
         //--------------------------------------
 
-        String filePath = "C:\\Users\\adngo\\Desktop\\Projets\\easy-shop\\src\\main\\resources\\org\\example\\marketeasy\\fichierTxt\\tmp_id.txt";
+        String filePath = "C:\\Users\\adngo\\Desktop\\Projets\\easy-shop\\src\\main\\resources\\org\\example\\marketeasy\\fichierTxt\\prod_tmp_id.txt";
         File file = new File(filePath); // Remplacez par le chemin où vous voulez créer le fichier
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
@@ -819,20 +849,74 @@ public class DashboardController implements Initializable {
 
         connection.close();
     }
+    private int counter = 0;
 
     @Override
 //    Oppération à éffectuer dès le lancement de l'appli
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        // Créer une tâche périodique avec Timeline
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+//            counter++;
+//            heure.setText("Counter: " + counter);
+            heure.setText(String.valueOf(java.time.LocalTime.now().format(formatter)));
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE); // Répéter indéfiniment
+        timeline.play(); // Démarrer l'animation
 //        addHistoryShowData();
+
+//        dateDuJour.setText(String.valueOf(java.time.LocalTime.now()));
+        dateDuJour.setText(String.valueOf(java.time.LocalDate.now()));
+
         displayUsername();
         screenName.setText("ACCEUIL");
         acceuilButton.setStyle("-fx-background-color : #f84df8;");
 //        screenUsername.setText(user.getUsername());
 
         updateScreen();
+
+        //--------------------------------
+
+        String req = "SELECT * FROM categories";
+
+        Connection connection = Database.shop_connectDB();
+
         try {
+            PreparedStatement preparedStatement = connection.prepareStatement(req);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Charger le fichier FXML pour la vue de chaque item
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("categories_items_view.fxml"));
+
+            while (resultSet.next()) {
+                // Charger la vue
+                Parent itemView = loader.load();
+                Cat_items_view_controller controller = loader.getController();
+
+                // Passer les données au contrôleur
+                String name = resultSet.getString("nom");
+//                String price = resultSet.getString("price");
+                controller.setItemData(name);
+
+                // Ajouter la vue au conteneur principal
+                root.getChildren().add(itemView);
+            }
+
+//            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("dashboard.fxml"));
+//            VBox loadedVBox = loader.load();
+//            Pane pane1 = (Pane) loadedVBox.lookup("#pane1");
+//
+//            for (int i = 1; i <= 5; i++) {
+//                Pane newPane = new Pane(); // Créez un nouveau Pane ici
+//                newPane.getChildren().add(new Label("Pane " + i));
+//                main_form.getChildren().add(newPane);
+//            }
+
+            //--------------------------------
             varlist();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

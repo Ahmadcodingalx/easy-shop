@@ -1,16 +1,19 @@
 package org.example.marketeasy.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.marketeasy.IDBConfig.Database;
 import org.example.marketeasy.models.Articles;
 
+import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 
-public class AddPrductsController {
+public class AddPrductsController implements Initializable {
     @FXML
     private Button addPrpduitButton;
 
@@ -32,6 +35,12 @@ public class AddPrductsController {
     @FXML
     private TextField productPrice;
 
+    @FXML
+    private ComboBox<String> category;
+
+    @FXML
+    private Label cat_id;
+
     Articles articles = new Articles();
 
     Alert alert;
@@ -39,6 +48,7 @@ public class AddPrductsController {
     PreparedStatement preparedStatement;
     Statement statement;
     ResultSet resultSet;
+    Connection connection = Database.shop_connectDB();
 
     public void addProducts() throws SQLException {
 
@@ -47,9 +57,24 @@ public class AddPrductsController {
         articles.setDate(String.valueOf(productDate.getValue()));
         articles.setSeuilDAlerte(productAlert.getText());
 
-        String sql = "INSERT INTO produits (nom, prix, quantite, frequence, seuil, date) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
-        Connection connection = Database.shop_connectDB();
+        String req = "SELECT id FROM categories WHERE nom = ?";
+        String categoryId = "";
+
+        try {
+            preparedStatement = connection.prepareStatement(req);
+            preparedStatement.setString(1, category.getValue());
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                categoryId = resultSet.getString("id");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        String sql = "INSERT INTO produits (nom, prix, quantite, frequence, seuil, date, categories_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
 
@@ -92,6 +117,7 @@ public class AddPrductsController {
                     preparedStatement.setString(4, "0");
                     preparedStatement.setString(5, articles.getSeuilDAlerte());
                     preparedStatement.setString(6, articles.getDate());
+                    preparedStatement.setString(7, categoryId);
 
                     preparedStatement.executeUpdate();
 
@@ -105,12 +131,40 @@ public class AddPrductsController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        connection.close();
 
     }
 
-    public void close() {
+    public void close() throws SQLException {
+        connection.close();
         Stage stg = (Stage) addPrpduitButton.getScene().getWindow();
         stg.close();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        String sql = "SELECT nom FROM categories";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                category.getItems().add(resultSet.getString("nom"));
+            }
+
+//            category.valueProperty().addListener((observable, oldValue, newValue) -> {
+//                try {
+//                    preparedStatement = connection.prepareStatement(sql2);
+//                    preparedStatement.setString(1, category.getValue());
+//                    if (resultSet.next()) {
+//                        cat_id.setText("Vous avez sélectionné : " + resultSet.getString("nom"));
+//                    }
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            });
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
