@@ -26,15 +26,6 @@
     -fx-background-color : transparent;
 }
 
-.scroll-pane {
-    -fx-background-radius : 10px;
-    -fx-border-radius : 10px;
-}
-
-.scroll-pane:hover {
-    -fx-background-color : blue;
-}
-
 .hide-button {
     -fx-background-color : transparent;
 }
@@ -104,7 +95,7 @@
 }
 
 .delete-all-button {
-    -fx-background-color : red;
+    -fx-background-color : #1bcaff;
     -fx-font-size : 15px;
 }
 
@@ -243,4 +234,26 @@
 .table-view .column-header .label {
     -fx-text-fill : #fff;
     -fx-font-family : Arial;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #fff; /* La couleur de fond que tu veux */
+    -fx-background-radius : 10px;
+    -fx-border-radius : 10px;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent; /* pour le fond du ScrollPane */
+    -fx-border-color: transparent; /* pour enlever la bordure */
+    -fx-padding: 0; /* pour enlever le padding */
+}
+
+.scroll-pane .scroll-bar:horizontal .track,
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: #fff; /* La couleur de fond que tu veux pour les barres de défilement */
+}
+
+.scroll-pane .scroll-bar:horizontal .thumb,
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: blue; /* pour les poignées des barres de défilement */
 }

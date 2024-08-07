@@ -1,0 +1,10 @@
+.container {
+    -fx-background-radius : 18px;
+    -fx-border-radius : 18px;
+    -fx-border-width : 2px;
+    -fx-border-color : linear-gradient(to top, #cc75ff, #dda6ff, #dda6ff, #dda6ff, #dda6ff, #cc75ff);
+}
+
+.container:hover {
+    -fx-background-color : #dda6ff;
+}

@@ -2,7 +2,6 @@ package org.example.marketeasy.controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -18,7 +17,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -35,6 +33,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,6 +54,12 @@ public class DashboardController implements Initializable {
     private Button acceuilButton;
 
     @FXML
+    private VBox vbox_item;
+
+    @FXML
+    private VBox vbox_item1;
+
+    @FXML
     private Button addCat1Buttom;
 
     @FXML
@@ -64,6 +70,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button calculatriceButton;
+
+    @FXML
+    private AnchorPane item_cat;
 
     @FXML
     private Label categorieName;
@@ -338,9 +347,11 @@ public class DashboardController implements Initializable {
 
             screenName.setText("PRODUITS");
 
-            addCategoryShowData();
+//            addCategoryShowData();
             addProductShowData();
             searchProd();
+            cat_items();
+            prod_items();
 
         } else if (event.getSource() == statistiquesButton) {
 
@@ -859,14 +870,14 @@ public class DashboardController implements Initializable {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 //            counter++;
 //            heure.setText("Counter: " + counter);
-            heure.setText(String.valueOf(java.time.LocalTime.now().format(formatter)));
+            heure.setText(String.valueOf(LocalTime.now().format(formatter)));
         }));
         timeline.setCycleCount(Timeline.INDEFINITE); // Répéter indéfiniment
         timeline.play(); // Démarrer l'animation
 //        addHistoryShowData();
 
 //        dateDuJour.setText(String.valueOf(java.time.LocalTime.now()));
-        dateDuJour.setText(String.valueOf(java.time.LocalDate.now()));
+        dateDuJour.setText(String.valueOf(LocalDate.now()));
 
         displayUsername();
         screenName.setText("ACCEUIL");
@@ -874,33 +885,64 @@ public class DashboardController implements Initializable {
 //        screenUsername.setText(user.getUsername());
 
         updateScreen();
+//        cat_and_prod_items();
+        try {
+            varlist();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
+
+    }
+
+    public void cat_items() {
+
+        Connection connection;
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
         //--------------------------------
 
         String req = "SELECT * FROM categories";
 
-        Connection connection = Database.shop_connectDB();
+        connection = Database.shop_connectDB();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(req);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement = connection.prepareStatement(req);
+            resultSet = preparedStatement.executeQuery();
 
-            // Charger le fichier FXML pour la vue de chaque item
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("categories_items_view.fxml"));
 
             while (resultSet.next()) {
+                DataCalcule dataCalcule = new DataCalcule();
+                // Charger le fichier FXML pour la vue de chaque item
+                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("categories_items_view.fxml"));
                 // Charger la vue
                 Parent itemView = loader.load();
                 Cat_items_view_controller controller = loader.getController();
 
                 // Passer les données au contrôleur
                 String name = resultSet.getString("nom");
+                String desc;
+                if (!Objects.equals(resultSet.getString("description"), "")) {
+                    desc = resultSet.getString("description");
+                } else {
+                    desc = "Aucune description";
+                }
+                String T_P = resultSet.getString("id");
+                String P_R = resultSet.getString("produits_rouges");
 //                String price = resultSet.getString("price");
-                controller.setItemData(name);
+                assert false;
+                String T_P2 = dataCalcule.totalProdByCat(T_P);
+
+                controller.catSetItemData(name, desc, String.valueOf(T_P2), P_R);
 
                 // Ajouter la vue au conteneur principal
-                root.getChildren().add(itemView);
+                vbox_item.getChildren().add(itemView);
             }
+//            Stage primaryStage = new Stage();
+//            Scene scene = new Scene(item_cat, 600, 400);
+//            primaryStage.setScene(scene);
+//            primaryStage.setTitle("Item List");
+//            primaryStage.show();
 
 //            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("dashboard.fxml"));
 //            VBox loadedVBox = loader.load();
@@ -913,10 +955,65 @@ public class DashboardController implements Initializable {
 //            }
 
             //--------------------------------
-            varlist();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
-        } catch (IOException e) {
+        }
+    }
+
+    public void prod_items() {
+
+        Connection connection;
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        //--------------------------------
+
+        String req = "SELECT * FROM produits";
+
+        connection = Database.shop_connectDB();
+
+        try {
+            preparedStatement = connection.prepareStatement(req);
+            resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+//                DataCalcule dataCalcule = new DataCalcule();
+                // Charger le fichier FXML pour la vue de chaque item
+                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("product_items_view.fxml"));
+                // Charger la vue
+                Parent itemView = loader.load();
+                Prod_items_view_controller controller = loader.getController();
+
+                // Passer les données au contrôleur
+                String name = resultSet.getString("nom");
+                String price = resultSet.getString("prix");
+//                String price = resultSet.getString("price");
+                assert false;
+//                String T_P2 = dataCalcule.totalProdByCat(T_P);
+
+                controller.prodSetItemData(name, price, "vide", 1);
+
+                // Ajouter la vue au conteneur principal
+                vbox_item1.getChildren().add(itemView);
+            }
+//            Stage primaryStage = new Stage();
+//            Scene scene = new Scene(item_cat, 600, 400);
+//            primaryStage.setScene(scene);
+//            primaryStage.setTitle("Item List");
+//            primaryStage.show();
+
+//            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("dashboard.fxml"));
+//            VBox loadedVBox = loader.load();
+//            Pane pane1 = (Pane) loadedVBox.lookup("#pane1");
+//
+//            for (int i = 1; i <= 5; i++) {
+//                Pane newPane = new Pane(); // Créez un nouveau Pane ici
+//                newPane.getChildren().add(new Label("Pane " + i));
+//                main_form.getChildren().add(newPane);
+//            }
+
+            //--------------------------------
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }

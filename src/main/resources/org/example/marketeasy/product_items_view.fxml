@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.marketeasy.controllers.Prod_items_view_controller">
+   <children>
+      <AnchorPane maxHeight="165.0" prefWidth="450.0" styleClass="container" stylesheets="@css/item_cat_style.css">
+         <children>
+            <HBox alignment="CENTER" layoutX="8.0" layoutY="10.0" prefHeight="21.0" spacing="200.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.0">
+               <children>
+                  <Label fx:id="prod_name_try" text="Nom">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <HBox>
+                     <children>
+                        <Label fx:id="price" text="Prix">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="/Produit">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="12.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="41.0" spacing="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="21.0" spacing="100.0">
+                     <children>
+                        <Label text="Quantité     =">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totale_price" layoutX="22.0" layoutY="10.0" text="Prix">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="12.0" />
+                     </padding>
+                  </HBox>
+                  <ProgressIndicator fx:id="progress_Ind" prefWidth="95.0" progress="0.0" />
+               </children>
+            </HBox>
+            <ProgressBar fx:id="ProbgressBar" layoutX="24.0" layoutY="90.0" prefHeight="12.0" prefWidth="354.0" progress="0.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="73.0" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </AnchorPane>
+   </children>
+</StackPane>

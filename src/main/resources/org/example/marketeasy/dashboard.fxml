@@ -420,7 +420,7 @@
                               </AnchorPane>
                            </center>
                         </BorderPane>
-                        <HBox fx:id="screen2" alignment="CENTER" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox fx:id="screen2" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane onMouseMoved="#addProdSelect" prefHeight="698.0" prefWidth="880.0">
                                  <children>
@@ -444,18 +444,15 @@
                                           </HBox>
                                        </top>
                                        <center>
-                                          <TableView fx:id="categorieTableView" onMouseClicked="#addCatSelect" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
-                                             <columns>
-                                                <TableColumn fx:id="colCatNoms" prefWidth="94.0" text="Nom" />
-                                                <TableColumn fx:id="colCatDates" prefWidth="74.0" text="Dates" />
-                                                <TableColumn fx:id="colCatDescriptions" prefWidth="78.0" text="Descriptions" />
-                                                <TableColumn fx:id="colCatTotalProduits" prefWidth="73.0" text="Tot. prdts" />
-                                                <TableColumn fx:id="colCatProduitRouges" prefWidth="79.0" text="Prdts rouges" />
-                                             </columns>
-                                             <BorderPane.margin>
-                                                <Insets top="5.0" />
-                                             </BorderPane.margin>
-                                          </TableView>
+                                          <ScrollPane fitToWidth="true" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+                                             <content>
+                                                <AnchorPane fx:id="item_cat">
+                                                   <children>
+                                                      <VBox fx:id="vbox_item" alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </ScrollPane>
                                        </center>
                                     </BorderPane>
                                     <BorderPane layoutX="475.0" prefHeight="698.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -469,23 +466,15 @@
                                        <center>
                                           <BorderPane BorderPane.alignment="CENTER">
                                              <center>
-                                                <AnchorPane>
-                                                   <children>
-                                                      <AnchorPane>
+                                                <ScrollPane>
+                                                   <content>
+                                                      <AnchorPane fx:id="item_prod">
                                                          <children>
-                                                            <TableView fx:id="prodTableView" onMouseEntered="#addProdSelect" onMouseMoved="#addProdSelect" prefHeight="446.0" prefWidth="475.0" stylesheets="@css/styles.css">
-                                                               <columns>
-                                                                  <TableColumn fx:id="colProdName" prefWidth="122.0" text="Noms" />
-                                                                  <TableColumn fx:id="colProdPrice" prefWidth="115.0" text="Prix(fcfa)" />
-                                                                  <TableColumn fx:id="colProdFreq" prefWidth="93.0" text="Fréquences" />
-                                                                  <TableColumn fx:id="colProdSize" prefWidth="72.0" text="Quantité" />
-                                                                  <TableColumn fx:id="colProdprices" prefWidth="72.0" text="Somme" />
-                                                               </columns>
-                                                            </TableView>
+                                                            <VBox fx:id="vbox_item1" alignment="CENTER" spacing="10.0" />
                                                          </children>
                                                       </AnchorPane>
-                                                   </children>
-                                                </AnchorPane>
+                                                   </content>
+                                                </ScrollPane>
                                              </center>
                                              <top>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
@@ -577,7 +566,7 @@
                                                          <children>
                                                             <Button fx:id="deleteProdButton" mnemonicParsing="false" onAction="#deleteProd" prefHeight="41.0" prefWidth="110.0" styleClass="delete-button" stylesheets="@css/styles.css" text="Supprimer" />
                                                             <Button fx:id="deleteProdButton1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateProd" prefHeight="41.0" prefWidth="100.0" styleClass="update-button" stylesheets="@css/styles.css" text="Modifier" />
-                                                            <Button fx:id="deleteAllProdButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="145.0" styleClass="delete-all-button" stylesheets="@css/styles.css" text="Supprimer tout" />
+                                                            <Button fx:id="deleteAllProdButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="145.0" styleClass="delete-all-button" stylesheets="@css/styles.css" text="Afficher tout" />
                                                          </children>
                                                       </HBox>
                                                       <TextField fx:id="searchTextZone" layoutX="8.0" layoutY="162.0" onKeyTyped="#searchProd" prefHeight="30.0" prefWidth="457.0" promptText="Rechercher" styleClass="search" stylesheets="@css/styles.css">
@@ -866,9 +855,28 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <ScrollPane fx:id="screen5" layoutX="294.0" layoutY="135.0" onMouseMoved="#addProdSelect" prefHeight="696.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane fx:id="screen5" layoutX="294.0" layoutY="135.0" onMouseMoved="#addProdSelect" prefHeight="696.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <AnchorPane fx:id="item_cat" prefWidth="500.0" style="-fx-background-color: blue;" />
+                              <TableView fx:id="categorieTableView" onMouseClicked="#addCatSelect" prefHeight="473.0" prefWidth="395.0" stylesheets="@css/styles.css">
+                                 <columns>
+                                    <TableColumn fx:id="colCatNoms" prefWidth="94.0" text="Nom" />
+                                    <TableColumn fx:id="colCatDates" prefWidth="74.0" text="Dates" />
+                                    <TableColumn fx:id="colCatDescriptions" prefWidth="78.0" text="Descriptions">
+                                       <graphic>
+                                          <TableView fx:id="prodTableView" onMouseEntered="#addProdSelect" onMouseMoved="#addProdSelect" prefHeight="446.0" prefWidth="475.0" stylesheets="@css/styles.css">
+                                             <columns>
+                                                <TableColumn fx:id="colProdName" prefWidth="122.0" text="Noms" />
+                                                <TableColumn fx:id="colProdPrice" prefWidth="115.0" text="Prix(fcfa)" />
+                                                <TableColumn fx:id="colProdFreq" prefWidth="93.0" text="Fréquences" />
+                                                <TableColumn fx:id="colProdSize" prefWidth="72.0" text="Quantité" />
+                                                <TableColumn fx:id="colProdprices" prefWidth="72.0" text="Somme" />
+                                             </columns>
+                                          </TableView>
+                                       </graphic></TableColumn>
+                                    <TableColumn fx:id="colCatTotalProduits" prefWidth="73.0" text="Tot. prdts" />
+                                    <TableColumn fx:id="colCatProduitRouges" prefWidth="79.0" text="Prdts rouges" />
+                                 </columns>
+                              </TableView>
                            </content>
                         </ScrollPane>
                         <AnchorPane fx:id="screen6" layoutX="225.0" layoutY="101.0" prefHeight="696.0" prefWidth="880.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
